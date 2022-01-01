@@ -46,5 +46,9 @@ public class HotelSearch {
                 .findFirst()
                 .ifPresent(element -> element.click());
 
+        // ilość osób
+        driver.findElement(By.id("travellersInput")).click();
+        driver.findElement(By.id("adultPlusBtn")).click();
+        driver.findElement(By.id("childPlusBtn")).click();
     }
 }
