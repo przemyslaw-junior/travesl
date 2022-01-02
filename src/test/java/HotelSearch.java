@@ -4,7 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class HotelSearch {
 
@@ -22,7 +24,7 @@ public class HotelSearch {
         driver.findElement(By.xpath("//div[@id='select2-drop']//input")).sendKeys("Dubai");
         driver.findElement(By.xpath("//span[@class='select2-match']")).click();
 
-/*
+
     // Check in
         // wpisanie ręcznie daty
         driver.findElement(By.xpath("//*[@name='checkin']")).sendKeys("5/01/2022");
@@ -30,7 +32,7 @@ public class HotelSearch {
     // Check out
         // wpisanie ręcznie daty
         driver.findElement(By.name("checkout")).sendKeys("15/01/2022");
-     */
+
         // wpisanie daty z wyboru kalendarza
         driver.findElement(By.name("checkin")).click();
         driver.findElements(By.xpath("//td[@class='day ' and text()='5']"))
@@ -38,7 +40,7 @@ public class HotelSearch {
                 .filter(element -> element.isDisplayed())
                 .findFirst()
                 .ifPresent(element -> element.click());
-
+*/
         driver.findElement(By.name("checkout")).click();
         driver.findElements(By.xpath("//td[@class='day ' and text()='8']"))
                 .stream()
@@ -50,5 +52,15 @@ public class HotelSearch {
         driver.findElement(By.id("travellersInput")).click();
         driver.findElement(By.id("adultPlusBtn")).click();
         driver.findElement(By.id("childPlusBtn")).click();
+
+        // wciśnięcie przyciski search
+        driver.findElement(By.xpath("//button[@type='submit' and text()=' Search']")).click();
+
+        // lista dostępnych hoteli
+        List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class, 'list_title')]//b"))
+                                        .stream()
+                                        .map(element -> element.getText())
+                                        .collect(Collectors.toList());
+        System.out.println("Liczba dostępnych Hoteli: "+ hotelNames.size());
     }
 }
