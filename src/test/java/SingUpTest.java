@@ -28,5 +28,15 @@ public class SingUpTest {
         driver.findElements(By.xpath("//a[text()='  Sign Up']"))
                 .get(1)
                 .click();
+
+    // Formularz rejestracyjny
+        driver.findElement(By.name("firstname"))
+                .sendKeys("Imię");
+        driver.findElement(By.name("lastname"))
+                .sendKeys("Nazwisko");
+        driver.findElement(By.name("phone"))
+                .sendKeys("123456789");
+        driver.findElement(By.name("email"))
+                .sendKeys("ImieNazwisko@email.com");
     }
 }
