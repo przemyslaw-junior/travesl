@@ -1,7 +1,9 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -44,9 +46,11 @@ public class HotelSearch {
         driver.findElement(By.name("checkout")).click();
         driver.findElements(By.xpath("//td[@class='day ' and text()='8']"))
                 .stream()
-                .filter(element -> element.isDisplayed())
+                //.filter(element -> element.isDisplayed())   // wyrażenie lambda
+                .filter(WebElement::isDisplayed)        // metoda referencyjna
                 .findFirst()
-                .ifPresent(element -> element.click());
+                //.ifPresent(element -> element.click());     // wyrażenie lambda
+                        .ifPresent(WebElement::click);  // metoda referencyjna
 
         // ilość osób
         driver.findElement(By.id("travellersInput")).click();
@@ -59,8 +63,17 @@ public class HotelSearch {
         // lista dostępnych hoteli
         List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class, 'list_title')]//b"))
                                         .stream()
-                                        .map(element -> element.getText())
+                                        .map(element -> element.getAttribute("textContent"))
                                         .collect(Collectors.toList());
+/*
         System.out.println("Liczba dostępnych Hoteli: "+ hotelNames.size());
+        hotelNames.forEach(el-> System.out.println(el));   // wyrażenie lambda
+        hotelNames.forEach(System.out::println);      // metoda referencyjna
+*/
+        // sprawdzenie wyświetlanych nazw z oczekiwanymi rezultatami
+        Assert.assertEquals("Jumeirah Beach Hotel",hotelNames.get(0));
+        Assert.assertEquals("Oasis Beach Tower",hotelNames.get(1));
+        Assert.assertEquals("Rose Rayhaan Rotana",hotelNames.get(2));
+        Assert.assertEquals("Hyatt Regency Perth",hotelNames.get(3));
     }
 }
