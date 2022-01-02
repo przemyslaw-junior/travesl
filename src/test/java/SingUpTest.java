@@ -33,7 +33,9 @@ public class SingUpTest {
                 .get(1)
                 .click();
         String lastName= "Nazwisko";
-    // Formularz rejestracyjny
+        int randomNumber = (int) (Math.random()*1000);
+        String email = "ImieNazwisko"+ randomNumber+ "@email.com";
+        // Formularz rejestracyjny
         driver.findElement(By.name("firstname"))
                 .sendKeys("Imię");
         driver.findElement(By.name("lastname"))
@@ -41,7 +43,7 @@ public class SingUpTest {
         driver.findElement(By.name("phone"))
                 .sendKeys("123456789");
         driver.findElement(By.name("email"))
-                .sendKeys("ImieNazwisko7@email.com");
+                .sendKeys(email);
         driver.findElement(By.name("password"))
                 .sendKeys("haslo123");
         driver.findElement(By.name("confirmpassword"))
