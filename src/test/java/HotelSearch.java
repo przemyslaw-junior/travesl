@@ -29,11 +29,7 @@ public class HotelSearch {
 
     // Check in
         // wpisanie ręcznie daty
-        driver.findElement(By.xpath("//*[@name='checkin']")).sendKeys("5/01/2022");
-/*
-    // Check out
-        // wpisanie ręcznie daty
-        driver.findElement(By.name("checkout")).sendKeys("15/01/2022");
+        //driver.findElement(By.xpath("//*[@name='checkin']")).sendKeys("5/01/2022");
 
         // wpisanie daty z wyboru kalendarza
         driver.findElement(By.name("checkin")).click();
@@ -42,15 +38,20 @@ public class HotelSearch {
                 .filter(element -> element.isDisplayed())
                 .findFirst()
                 .ifPresent(element -> element.click());
-*/
+    // Check out
+        // wpisanie ręcznie daty
+        //driver.findElement(By.name("checkout")).sendKeys("15/01/2022");
+
+
+
         driver.findElement(By.name("checkout")).click();
-        driver.findElements(By.xpath("//td[@class='day ' and text()='8']"))
+        driver.findElements(By.xpath("//td[@class='day ' and text()='15']"))
                 .stream()
-                //.filter(element -> element.isDisplayed())   // wyrażenie lambda
-                .filter(WebElement::isDisplayed)        // metoda referencyjna
+                .filter(element -> element.isDisplayed())   // wyrażenie lambda
+                //.filter(WebElement::isDisplayed)        // metoda referencyjna
                 .findFirst()
-                //.ifPresent(element -> element.click());     // wyrażenie lambda
-                        .ifPresent(WebElement::click);  // metoda referencyjna
+                .ifPresent(element -> element.click());     // wyrażenie lambda
+                //.ifPresent(WebElement::click);  // metoda referencyjna
 
         // ilość osób
         driver.findElement(By.id("travellersInput")).click();
@@ -65,11 +66,11 @@ public class HotelSearch {
                                         .stream()
                                         .map(element -> element.getAttribute("textContent"))
                                         .collect(Collectors.toList());
-/*
+
         System.out.println("Liczba dostępnych Hoteli: "+ hotelNames.size());
         hotelNames.forEach(el-> System.out.println(el));   // wyrażenie lambda
         hotelNames.forEach(System.out::println);      // metoda referencyjna
-*/
+
         // sprawdzenie wyświetlanych nazw z oczekiwanymi rezultatami
         Assert.assertEquals("Jumeirah Beach Hotel",hotelNames.get(0));
         Assert.assertEquals("Oasis Beach Tower",hotelNames.get(1));
