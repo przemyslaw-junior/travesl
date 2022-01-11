@@ -10,16 +10,10 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 
-public class SingUpTest {
+public class SingUpTest extends BaseBrowserTest{
 
     @Test
     public void singUp() {
-
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
-        driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
 
     // Przycisk [My Account]
         driver.findElements(By.xpath("//li[@id='li_myaccount']"))
@@ -59,5 +53,6 @@ public class SingUpTest {
 
         Assert.assertTrue(heading.getText().contains(lastName));
         Assert.assertEquals(heading.getText(),"Hi, Imię Nazwisko");
+
     }
 }

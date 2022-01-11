@@ -1,5 +1,3 @@
-package HomeWork;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,17 +10,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class FormSingUp {
-
+public class FormSingUpTest extends BaseBrowserTest{
     @Test
     public void emptySingUpForm(){
 
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
-
-        driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
         //  My Account
         driver.findElements(By.xpath("//li[@id='li_myaccount']"))
                 .stream()
@@ -57,12 +48,6 @@ public class FormSingUp {
     @Test
     public void notValidEmailSingUpForm(){
 
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
-
-        driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
         //  My Account
         driver.findElements(By.xpath("//li[@id='li_myaccount']"))
                 .stream()
@@ -99,5 +84,6 @@ public class FormSingUp {
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
         Assert.assertTrue(requiredField.contains("The Email field must contain a valid email address."));
+
     }
 }
