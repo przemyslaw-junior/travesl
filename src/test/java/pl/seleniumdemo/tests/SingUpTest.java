@@ -1,3 +1,5 @@
+package pl.seleniumdemo.tests;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +12,7 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 
-public class SingUpTest extends BaseBrowserTest{
+public class SingUpTest extends BaseBrowserTest {
 
     @Test
     public void singUp() {

@@ -1,16 +1,15 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
+package pl.seleniumdemo.tests;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pl.seleniumdemo.tests.BaseBrowserTest;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class FormSingUpTest extends BaseBrowserTest{
+public class FormSingUpTest extends BaseBrowserTest {
     @Test
     public void emptySingUpForm(){
 

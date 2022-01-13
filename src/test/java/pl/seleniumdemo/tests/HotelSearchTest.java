@@ -1,3 +1,5 @@
+package pl.seleniumdemo.tests;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class HotelSearchTest extends BaseBrowserTest{
+public class HotelSearchTest extends BaseBrowserTest {
 
     @Test
     public void searchHotel(){
