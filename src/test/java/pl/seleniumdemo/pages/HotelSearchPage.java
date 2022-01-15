@@ -34,6 +34,7 @@ public class HotelSearchPage {
     @FindBy(xpath = "//button[@type='submit' and text()=' Search']")
     private WebElement searchButton;
 
+
     public HotelSearchPage(WebDriver driver){
         PageFactory.initElements( driver,this);
     }
@@ -49,10 +50,17 @@ public class HotelSearchPage {
         checkoutInput.sendKeys("24/01/2021");
     }
 
-    public void setTravellers(){
+    public void setTravellers(int adultsToAdd, int childToAdd){
         travellersInput.click();
-        adultPlusBtn.click();
-        childPlusBtn.click();
+        addTraveler(adultPlusBtn,adultsToAdd);
+        addTraveler(adultPlusBtn,childToAdd);
+    }
+
+
+    public void addTraveler(WebElement travelerBtn, int numberOfTravelers){
+        for (int i=0; i< numberOfTravelers; i++){
+            travelerBtn.click();
+        }
     }
 
     public void performSearch(){

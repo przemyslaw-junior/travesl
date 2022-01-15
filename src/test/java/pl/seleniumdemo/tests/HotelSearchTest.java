@@ -1,10 +1,5 @@
 package pl.seleniumdemo.tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
@@ -22,7 +17,7 @@ public class HotelSearchTest extends BaseBrowserTest {
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.setCity("Dubai");
         hotelSearchPage.setDates("21/01/2022", "24/02/2023");
-        hotelSearchPage.setTravellers();
+        hotelSearchPage.setTravellers(1,2);
         hotelSearchPage.performSearch();
 
         ResultsPage resultsPage = new ResultsPage(driver);
@@ -85,5 +80,18 @@ public class HotelSearchTest extends BaseBrowserTest {
         Assert.assertEquals("Rose Rayhaan Rotana",hotelNames.get(2));
         Assert.assertEquals("Hyatt Regency Perth",hotelNames.get(3));
 
+    }
+    @Test
+    public void searchHotelWithoutNameTest(){
+
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.setDates("21/01/2021", "25/01/2021");
+        hotelSearchPage.setTravellers(0,1);
+        hotelSearchPage.performSearch();
+
+        ResultsPage resultsPage = new ResultsPage(driver);
+
+        Assert.assertTrue(resultsPage.resultHeading.isDisplayed());
+        Assert.assertEquals(resultsPage.getHeadingText(), "No Results Found");
     }
 }
