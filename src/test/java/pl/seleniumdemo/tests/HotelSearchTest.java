@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
+import pl.seleniumdemo.pages.ResultsPage;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +24,9 @@ public class HotelSearchTest extends BaseBrowserTest {
         hotelSearchPage.setDates("21/01/2022", "24/02/2023");
         hotelSearchPage.setTravellers();
         hotelSearchPage.performSearch();
+
+        ResultsPage resultsPage = new ResultsPage(driver);
+        List<String> hotelNames = resultsPage.getHotelNames();
 /*
     // Wpisanie szukanego miasta
         driver.findElement(By.className("select2-chosen")).click();
@@ -64,7 +68,7 @@ public class HotelSearchTest extends BaseBrowserTest {
 
         // wciśnięcie przyciski search
         driver.findElement(By.xpath("//button[@type='submit' and text()=' Search']")).click();
-*/
+
         // lista dostępnych hoteli
         List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class, 'list_title')]//b"))
                                         .stream()
@@ -74,7 +78,7 @@ public class HotelSearchTest extends BaseBrowserTest {
         System.out.println("Liczba dostępnych Hoteli: "+ hotelNames.size());
         hotelNames.forEach(el-> System.out.println(el));   // wyrażenie lambda
         hotelNames.forEach(System.out::println);      // metoda referencyjna
-
+*/
         // sprawdzenie wyświetlanych nazw z oczekiwanymi rezultatami
         Assert.assertEquals("Jumeirah Beach Hotel",hotelNames.get(0));
         Assert.assertEquals("Oasis Beach Tower",hotelNames.get(1));
