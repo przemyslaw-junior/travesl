@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pl.seleniumdemo.pages.HotelSearchPage;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,13 @@ public class HotelSearchTest extends BaseBrowserTest {
 
     @Test
     public void searchHotel(){
-
+//skrócenie kodu po przez Page Object oraz Page Factory
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.setCity("Dubai");
+        hotelSearchPage.setDates("21/01/2022", "24/02/2023");
+        hotelSearchPage.setTravellers();
+        hotelSearchPage.performSearch();
+/*
     // Wpisanie szukanego miasta
         driver.findElement(By.className("select2-chosen")).click();
         driver.findElement(By.xpath("//div[@id='select2-drop']//input")).sendKeys("Dubai");
@@ -26,7 +33,7 @@ public class HotelSearchTest extends BaseBrowserTest {
     // Check in
         // wpisanie ręcznie daty
         driver.findElement(By.xpath("//*[@name='checkin']")).sendKeys("5/01/2022");
-/*
+*//*
         // wpisanie daty z wyboru kalendarza
         driver.findElement(By.name("checkin")).click();
         driver.findElements(By.xpath("//td[@class='day ' and text()='5']"))
@@ -34,7 +41,7 @@ public class HotelSearchTest extends BaseBrowserTest {
                 .filter(element -> element.isDisplayed())
                 .findFirst()
                 .ifPresent(element -> element.click());
-*/
+*//*
     // Check out
         // wpisanie ręcznie daty
         //driver.findElement(By.name("checkout")).sendKeys("15/01/2022");
@@ -57,7 +64,7 @@ public class HotelSearchTest extends BaseBrowserTest {
 
         // wciśnięcie przyciski search
         driver.findElement(By.xpath("//button[@type='submit' and text()=' Search']")).click();
-
+*/
         // lista dostępnych hoteli
         List<String> hotelNames = driver.findElements(By.xpath("//h4[contains(@class, 'list_title')]//b"))
                                         .stream()
