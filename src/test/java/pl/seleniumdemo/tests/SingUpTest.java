@@ -1,15 +1,11 @@
 package pl.seleniumdemo.tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
+import pl.seleniumdemo.pages.MyAccountPage;
+import pl.seleniumdemo.pages.SingUpPage;
 
 
 public class SingUpTest extends BaseBrowserTest {
@@ -17,7 +13,7 @@ public class SingUpTest extends BaseBrowserTest {
     @Test
     public void singUp() {
 
-    // Przycisk [My Account]
+/*    // Przycisk [My Account]
         driver.findElements(By.xpath("//li[@id='li_myaccount']"))
                 .stream()
                 .filter(WebElement::isDisplayed)
@@ -27,10 +23,23 @@ public class SingUpTest extends BaseBrowserTest {
     // Przycisk [Sing Up]     -mniej polecana metoda
         driver.findElements(By.xpath("//a[text()='  Sign Up']"))
                 .get(1)
-                .click();
-        String lastName= "Nazwisko";
+                .click();*/
+        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        myAccountPage.openSingUpForm();
+
+        String lastName = "Nazwisko";
         int randomNumber = (int) (Math.random()*1000);
         String email = "ImieNazwisko"+ randomNumber+ "@email.com";
+
+        SingUpPage singUpPage = new SingUpPage(driver);
+        singUpPage.setFirstNameInput("Imię");
+        singUpPage.setLastNameInput(lastName);
+        singUpPage.setPhoneInput("123456789");
+        singUpPage.setEmailInput(email);
+        singUpPage.setPasswordInput("haslo123");
+        singUpPage.setConfirmpasswordInput("haslo123");
+        singUpPage.singUp();
+ /*
         // Formularz rejestracyjny
         driver.findElement(By.name("firstname"))
                 .sendKeys("Imię");
@@ -49,7 +58,7 @@ public class SingUpTest extends BaseBrowserTest {
                 .filter(WebElement::isDisplayed)
                 .findFirst()
                 .ifPresent(WebElement::click);
-
+*/
     // sprwadzenie nagłówka
         WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
 
