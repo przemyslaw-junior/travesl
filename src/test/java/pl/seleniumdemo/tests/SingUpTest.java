@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pl.seleniumdemo.model.User;
 import pl.seleniumdemo.pages.LoggetUserPage;
 import pl.seleniumdemo.pages.MyAccountPage;
 import pl.seleniumdemo.pages.SingUpPage;
@@ -29,8 +30,8 @@ public class SingUpTest extends BaseBrowserTest {
         myAccountPage.openSingUpForm();
 
         String lastName = "Nazwisko";
-        int randomNumber = (int) (Math.random()*1000);
-        String email = "ImieNazwisko"+ randomNumber+ "@email.com";
+        int randomNumber = (int) (Math.random() * 1000);
+        String email = "ImieNazwisko" + randomNumber + "@email.com";
 
         SingUpPage singUpPage = new SingUpPage(driver);
         singUpPage.setFirstNameInput("Imię");
@@ -60,7 +61,7 @@ public class SingUpTest extends BaseBrowserTest {
                 .findFirst()
                 .ifPresent(WebElement::click);
 */
-    // sprwadzenie nagłówka
+        // sprwadzenie nagłówka
         //WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
         LoggetUserPage loggetUserPage = new LoggetUserPage(driver);
 
@@ -70,14 +71,15 @@ public class SingUpTest extends BaseBrowserTest {
         //Assert.assertEquals(heading.getText(),"Hi, Imię Nazwisko");
 
     }
+
     @Test
-    public void singUp2(){
+    public void singUp2() {
         MyAccountPage myAccountPage = new MyAccountPage(driver);
         myAccountPage.openSingUpForm();
 
         String lastName = "Nazwisko";
-        int randomNumber = (int) (Math.random()*1000);
-        String email = "ImieNazwisko"+ randomNumber+ "@email.com";
+        int randomNumber = (int) (Math.random() * 1000);
+        String email = "ImieNazwisko" + randomNumber + "@email.com";
 
         SingUpPage singUpPage = new SingUpPage(driver);
         singUpPage.fillSingUpForm("Imię", lastName, "123456789", email, "haslo123");
@@ -85,6 +87,30 @@ public class SingUpTest extends BaseBrowserTest {
         LoggetUserPage loggetUserPage = new LoggetUserPage(driver);
 
         Assert.assertTrue(loggetUserPage.getHedingText().contains(lastName));
+        Assert.assertEquals(loggetUserPage.getHedingText(), "Hi, Imię Nazwisko");
+    }
+
+    @Test
+    public void singUp3() {
+        int randomNumber = (int) (Math.random() * 1000);
+        String email = "ImieNazwisko" + randomNumber + "@email.com";
+
+        User user = new User();
+        user.setFirstName("Imię");
+        user.setLastName("Nazwisko");
+        user.setPhone("123456789");
+        user.setEmail(email);
+        user.setPassword("haslo123");
+
+        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        myAccountPage.openSingUpForm();
+
+        SingUpPage singUpPage = new SingUpPage(driver);
+        singUpPage.fillSingUpForm2(user);
+
+        LoggetUserPage loggetUserPage = new LoggetUserPage(driver);
+
+        Assert.assertTrue(loggetUserPage.getHedingText().contains(user.getLastName()));
         Assert.assertEquals(loggetUserPage.getHedingText(), "Hi, Imię Nazwisko");
     }
 }
