@@ -1,17 +1,16 @@
 package pl.seleniumdemo.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.seleniumdemo.tests.BaseBrowserTest;
+import pl.seleniumdemo.pages.MyAccountPage;
+import pl.seleniumdemo.pages.SingUpPage;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FormSingUpTest extends BaseBrowserTest {
     @Test
     public void emptySingUpForm(){
+/*
 
         //  My Account
         driver.findElements(By.xpath("//li[@id='li_myaccount']"))
@@ -28,11 +27,14 @@ public class FormSingUpTest extends BaseBrowserTest {
 
         // End Sign Up
         driver.findElement(By.xpath("//i[@class='fa fa-check-square-o' ]")).click();
+*/
+        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        myAccountPage.openSingUpForm();
 
-        List<String> requiredFields = driver.findElements(By.xpath("//div[@class='alert alert-danger' ]//p"))
-                .stream()
-                .map(element -> element.getAttribute("textContent"))
-                .collect(Collectors.toList());
+        SingUpPage singUpPage = new SingUpPage(driver);
+        singUpPage.singUp();
+
+        List<String> requiredFields = singUpPage.getEreors();
 
         requiredFields.forEach(System.out::println);
 
@@ -47,7 +49,8 @@ public class FormSingUpTest extends BaseBrowserTest {
     @Test
     public void notValidEmailSingUpForm(){
 
-        //  My Account
+
+ /*       //  My Account
         driver.findElements(By.xpath("//li[@id='li_myaccount']"))
                 .stream()
                 .filter(WebElement::isDisplayed)
@@ -58,8 +61,20 @@ public class FormSingUpTest extends BaseBrowserTest {
                 .stream()
                 .filter(WebElement::isDisplayed)
                 .findFirst()
-                .ifPresent(WebElement::click);
+                .ifPresent(WebElement::click);*/
+        MyAccountPage myAccountPage = new MyAccountPage(driver);
+        myAccountPage.openSingUpForm();
 
+        SingUpPage singUpPage = new SingUpPage(driver);
+        singUpPage.setFirstNameInput("Imię");
+        singUpPage.setLastNameInput("Nazwisko");
+        singUpPage.setPhoneInput("123456789");
+        singUpPage.setEmailInput("email");
+        singUpPage.setPasswordInput("haslo123");
+        singUpPage.setConfirmpasswordInput("haslo123");
+        singUpPage.singUp();
+
+/*
         driver.findElement(By.name("firstname"))
                 .sendKeys("Pierwsze Imię");
         driver.findElement(By.name("lastname"))
@@ -81,8 +96,8 @@ public class FormSingUpTest extends BaseBrowserTest {
         List<String> requiredField =  driver.findElements(By.xpath("//div[@class='alert alert-danger']"))
                 .stream()
                 .map(WebElement::getText)
-                .collect(Collectors.toList());
-        Assert.assertTrue(requiredField.contains("The Email field must contain a valid email address."));
+                .collect(Collectors.toList());*/
+        Assert.assertTrue(singUpPage.getEreors().contains("The Email field must contain a valid email address."));
 
     }
 }

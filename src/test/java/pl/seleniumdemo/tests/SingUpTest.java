@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pl.seleniumdemo.pages.LoggetUserPage;
 import pl.seleniumdemo.pages.MyAccountPage;
 import pl.seleniumdemo.pages.SingUpPage;
 
@@ -60,10 +61,13 @@ public class SingUpTest extends BaseBrowserTest {
                 .ifPresent(WebElement::click);
 */
     // sprwadzenie nagłówka
-        WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
+        //WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
+        LoggetUserPage loggetUserPage = new LoggetUserPage(driver);
 
-        Assert.assertTrue(heading.getText().contains(lastName));
-        Assert.assertEquals(heading.getText(),"Hi, Imię Nazwisko");
+        Assert.assertTrue(loggetUserPage.getHedingText().contains(lastName));
+        Assert.assertEquals(loggetUserPage.getHedingText(), "Hi, Imię Nazwisko");
+        //Assert.assertTrue(heading.getText().contains(lastName));
+        //Assert.assertEquals(heading.getText(),"Hi, Imię Nazwisko");
 
     }
 }

@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class SingUpPage {
 
     public SingUpPage (WebDriver driver){
@@ -32,6 +35,10 @@ public class SingUpPage {
     @FindBy (xpath = "//button[@type='submit']")
     private WebElement singUpButton;
 
+    @FindBy(xpath = "//div[@class='alert alert-danger' ]//p")
+    private List<WebElement> ereors;
+
+
     public void setFirstNameInput(String firstName){
         firstNameInput.sendKeys(firstName);
     }
@@ -55,25 +62,14 @@ public class SingUpPage {
     public void setConfirmpasswordInput(String password){
         confirmpasswordInput.sendKeys(password);
     }
+
     public void singUp(){
         singUpButton.click();
     }
+
+    public List<String> getEreors() {
+        return ereors.stream()
+                .map(element -> element.getAttribute("textContent"))
+                .collect(Collectors.toList());
+    }
 }
-/*
- driver.findElement(By.name("firstname"))
-         .sendKeys("Imię");
-         driver.findElement(By.name("lastname"))
-         .sendKeys(lastName);
-         driver.findElement(By.name("phone"))
-         .sendKeys("123456789");
-         driver.findElement(By.name("email"))
-         .sendKeys(email);
-         driver.findElement(By.name("password"))
-         .sendKeys("haslo123");
-         driver.findElement(By.name("confirmpassword"))
-         .sendKeys("haslo123");
-         driver.findElements(By.xpath("//button[@type='submit']"))
-         .stream()
-         .filter(WebElement::isDisplayed)
-         .findFirst()
-         .ifPresent(WebElement::click);*/
