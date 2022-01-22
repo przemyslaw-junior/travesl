@@ -70,21 +70,4 @@ public class SingUpTest extends BaseBrowserTest {
         //Assert.assertEquals(heading.getText(),"Hi, Imię Nazwisko");
 
     }
-    @Test
-    public void singUp2(){
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-        myAccountPage.openSingUpForm();
-
-        String lastName = "Nazwisko";
-        int randomNumber = (int) (Math.random()*1000);
-        String email = "ImieNazwisko"+ randomNumber+ "@email.com";
-
-        SingUpPage singUpPage = new SingUpPage(driver);
-        singUpPage.fillSingUpForm("Imię", lastName, "123456789", email, "haslo123");
-
-        LoggetUserPage loggetUserPage = new LoggetUserPage(driver);
-
-        Assert.assertTrue(loggetUserPage.getHedingText().contains(lastName));
-        Assert.assertEquals(loggetUserPage.getHedingText(), "Hi, Imię Nazwisko");
-    }
 }
