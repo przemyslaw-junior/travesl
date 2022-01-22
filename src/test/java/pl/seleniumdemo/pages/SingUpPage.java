@@ -43,8 +43,8 @@ public class SingUpPage {
         firstNameInput.sendKeys(firstName);
     }
 
-    public void setLastNameInput(String lsatName){
-        lastNameInput.sendKeys(lsatName);
+    public void setLastNameInput(String lastName){
+        lastNameInput.sendKeys(lastName);
     }
 
     public void setPhoneInput(String phone){
@@ -71,5 +71,16 @@ public class SingUpPage {
         return ereors.stream()
                 .map(element -> element.getAttribute("textContent"))
                 .collect(Collectors.toList());
+    }
+
+    public void fillSingUpForm(String firstName, String lastName, String phone, String email, String password ){
+
+        firstNameInput.sendKeys(firstName);
+        lastNameInput.sendKeys(lastName);
+        phoneInput.sendKeys(phone);
+        emailInput.sendKeys(email);
+        passwordInput.sendKeys(password);
+        confirmpasswordInput.sendKeys(password);
+        singUpButton.click();
     }
 }
