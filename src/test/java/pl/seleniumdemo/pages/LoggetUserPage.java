@@ -8,13 +8,13 @@ import org.openqa.selenium.support.PageFactory;
 public class LoggetUserPage {
 
     @FindBy(xpath = "//h3[@class='RTL']")
-    private WebElement heding;
+    private WebElement heading;
 
-    public LoggetUserPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+    public LoggetUserPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 
-    public String getHedingText(){
-        return heding.getText();
+    public String getHedingText() {
+        return heading.getText();
     }
 }

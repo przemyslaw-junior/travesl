@@ -1,88 +1,35 @@
 package pl.seleniumdemo.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pl.seleniumdemo.model.User;
+import org.testng.asserts.SoftAssert;
+import pl.seleniumdemo.pages.HotelSearchPage;
 import pl.seleniumdemo.pages.LoggetUserPage;
-import pl.seleniumdemo.pages.MyAccountPage;
 import pl.seleniumdemo.pages.SingUpPage;
 
+import java.util.List;
 
-public class SingUpTest extends BaseBrowserTest {
+
+public class SingUpTest extends BaseTest {
 
     @Test
-    public void singUp() {
-
-/*    // Przycisk [My Account]
-        driver.findElements(By.xpath("//li[@id='li_myaccount']"))
-                .stream()
-                .filter(WebElement::isDisplayed)
-                .findFirst()
-                .ifPresent(WebElement::click);
-
-    // Przycisk [Sing Up]     -mniej polecana metoda
-        driver.findElements(By.xpath("//a[text()='  Sign Up']"))
-                .get(1)
-                .click();*/
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-        myAccountPage.openSingUpForm();
+    public void singUpTest() {
 
         String lastName = "Nazwisko";
         int randomNumber = (int) (Math.random() * 1000);
         String email = "ImieNazwisko" + randomNumber + "@email.com";
 
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.openSingUpForm();
+
         SingUpPage singUpPage = new SingUpPage(driver);
-        singUpPage.setFirstNameInput("Imię");
-        singUpPage.setLastNameInput(lastName);
-        singUpPage.setPhoneInput("123456789");
-        singUpPage.setEmailInput(email);
-        singUpPage.setPasswordInput("haslo123");
-        singUpPage.setConfirmpasswordInput("haslo123");
+        singUpPage.setFirstName("Imię");
+        singUpPage.setLastName(lastName);
+        singUpPage.setPhone("123456789");
+        singUpPage.setEmail(email);
+        singUpPage.setPassword("haslo123");
+        singUpPage.setConfirmpassword("haslo123");
         singUpPage.singUp();
- /*
-        // Formularz rejestracyjny
-        driver.findElement(By.name("firstname"))
-                .sendKeys("Imię");
-        driver.findElement(By.name("lastname"))
-                .sendKeys(lastName);
-        driver.findElement(By.name("phone"))
-                .sendKeys("123456789");
-        driver.findElement(By.name("email"))
-                .sendKeys(email);
-        driver.findElement(By.name("password"))
-                .sendKeys("haslo123");
-        driver.findElement(By.name("confirmpassword"))
-                .sendKeys("haslo123");
-        driver.findElements(By.xpath("//button[@type='submit']"))
-                .stream()
-                .filter(WebElement::isDisplayed)
-                .findFirst()
-                .ifPresent(WebElement::click);
-*/
-        // sprwadzenie nagłówka
-        //WebElement heading = driver.findElement(By.xpath("//h3[@class='RTL']"));
-        LoggetUserPage loggetUserPage = new LoggetUserPage(driver);
-
-        Assert.assertTrue(loggetUserPage.getHedingText().contains(lastName));
-        Assert.assertEquals(loggetUserPage.getHedingText(), "Hi, Imię Nazwisko");
-        //Assert.assertTrue(heading.getText().contains(lastName));
-        //Assert.assertEquals(heading.getText(),"Hi, Imię Nazwisko");
-
-    }
-
-    @Test
-    public void singUp2() {
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-        myAccountPage.openSingUpForm();
-
-        String lastName = "Nazwisko";
-        int randomNumber = (int) (Math.random() * 1000);
-        String email = "ImieNazwisko" + randomNumber + "@email.com";
-
-        SingUpPage singUpPage = new SingUpPage(driver);
-        singUpPage.fillSingUpForm("Imię", lastName, "123456789", email, "haslo123");
 
         LoggetUserPage loggetUserPage = new LoggetUserPage(driver);
 
@@ -91,26 +38,41 @@ public class SingUpTest extends BaseBrowserTest {
     }
 
     @Test
-    public void singUp3() {
-        int randomNumber = (int) (Math.random() * 1000);
-        String email = "ImieNazwisko" + randomNumber + "@email.com";
+    public void singUpEmptyFormTest() {
 
-        User user = new User();
-        user.setFirstName("Imię");
-        user.setLastName("Nazwisko");
-        user.setPhone("123456789");
-        user.setEmail(email);
-        user.setPassword("haslo123");
-
-        MyAccountPage myAccountPage = new MyAccountPage(driver);
-        myAccountPage.openSingUpForm();
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.openSingUpForm();
 
         SingUpPage singUpPage = new SingUpPage(driver);
-        singUpPage.fillSingUpForm2(user);
+        singUpPage.singUp();
 
-        LoggetUserPage loggetUserPage = new LoggetUserPage(driver);
+        List<String> errors = singUpPage.getEreors();
 
-        Assert.assertTrue(loggetUserPage.getHedingText().contains(user.getLastName()));
-        Assert.assertEquals(loggetUserPage.getHedingText(), "Hi, Imię Nazwisko");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(errors.contains("The Email field is required."));
+        softAssert.assertTrue(errors.contains("The Password field is required."));
+        softAssert.assertTrue(errors.contains("The Password field is required."));
+        softAssert.assertTrue(errors.contains("The First name field is required."));
+        softAssert.assertTrue(errors.contains("The Last Name field is required."));
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void singUpInvalidEmail() {
+
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        hotelSearchPage.openSingUpForm();
+
+        SingUpPage singUpPage = new SingUpPage(driver);
+        singUpPage.setFirstName("Imię");
+        singUpPage.setLastName("Nazwisko");
+        singUpPage.setPhone("123456789");
+        singUpPage.setEmail("email");
+        singUpPage.setPassword("haslo123");
+        singUpPage.setConfirmpassword("haslo123");
+        singUpPage.singUp();
+
+        Assert.assertTrue(singUpPage.getEreors()
+                .contains("The Email field must contain a valid email address."));
     }
 }
