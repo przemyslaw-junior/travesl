@@ -11,6 +11,15 @@ public class HotelSearchTest extends BaseBrowserTest {
 
     @Test
     public void searchHotel(){
+        // urzycie fluent - płynne przejście przez strone testową
+        HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
+        List<String> hotelNames = hotelSearchPage
+                .setCity("Dubai")
+                .setDates("21/01/2022", "24/02/2023")
+                .setTravellers(1,2)
+                .performSearch().getHotelNames();
+
+/*
 //skrócenie kodu po przez Page Object oraz Page Factory
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
         hotelSearchPage.setCity("Dubai");
@@ -19,7 +28,7 @@ public class HotelSearchTest extends BaseBrowserTest {
         hotelSearchPage.performSearch();
 
         ResultsPage resultsPage = new ResultsPage(driver);
-        List<String> hotelNames = resultsPage.getHotelNames();
+        List<String> hotelNames = resultsPage.getHotelNames();*/
 /*
     // Wpisanie szukanego miasta
         driver.findElement(By.className("select2-chosen")).click();
