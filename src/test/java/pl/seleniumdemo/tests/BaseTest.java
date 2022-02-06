@@ -21,9 +21,9 @@ public class BaseTest {
         driver.get("http://www.kurs-selenium.pl/demo/");
         driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
     }
-
+/*
     @AfterMethod
     public void tearDown() {
         driver.quit();
-    }
+    }*/
 }

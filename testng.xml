@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Travellers">
+    <test name="Hotel Search Test" thread-count="3" parallel="methods">
+        <classes>
+            <class name="pl.seleniumdemo.onetime.HotelSearch"></class>
+        </classes>
+    </test>
+    <test name="Sing Up Test" thread-count="3" parallel="methods">
+        <classes>
+            <class name="pl.seleniumdemo.onetime.SingUp"></class>
+        </classes>
+    </test>
+</suite>

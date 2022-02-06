@@ -31,7 +31,7 @@ public class HotelSearchTest extends BaseTest {
     public void searchHotelWithoutNameTest() {
 
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
-        hotelSearchPage.setDates("21/01/2021", "25/01/2021");
+        hotelSearchPage.setDates("21/02/2021", "25/02/2021");
         hotelSearchPage.setTravellers(0, 1);
         hotelSearchPage.performSearch();
 
