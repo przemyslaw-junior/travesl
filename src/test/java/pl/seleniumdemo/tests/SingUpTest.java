@@ -1,11 +1,13 @@
 package pl.seleniumdemo.tests;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pl.seleniumdemo.pages.HotelSearchPage;
 import pl.seleniumdemo.pages.LoggetUserPage;
 import pl.seleniumdemo.pages.SingUpPage;
+import pl.seleniumdemo.utils.SeleniumHelper;
 
 import java.util.List;
 

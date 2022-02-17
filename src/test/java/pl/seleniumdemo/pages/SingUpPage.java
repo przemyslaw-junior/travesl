@@ -1,9 +1,11 @@
 package pl.seleniumdemo.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import pl.seleniumdemo.utils.SeleniumHelper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +36,11 @@ public class SingUpPage {
     @FindBy(xpath = "//div[@class='alert alert-danger' ]//p")
     private List<WebElement> ereors;
 
+    private WebDriver driver;
+
     public SingUpPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
     public void setFirstName(String firstName) {
@@ -67,6 +72,8 @@ public class SingUpPage {
     }
 
     public List<String> getEreors() {
+        SeleniumHelper.waitForNotEmptyList(driver, By.xpath("//div[@class='alert alert-danger' ]//p"));
+
         return ereors.stream()
                 .map(element -> element.getAttribute("textContent"))
                 .collect(Collectors.toList());
